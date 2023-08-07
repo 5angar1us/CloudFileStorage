@@ -11,7 +11,7 @@ import {AuthenticationInterceptor} from './services/authentication.interceptor';
 import {AuthenticationService} from './services/authentication.service';
 import {AppComponent} from './app.component';
 import {RequestComponent} from './components/request/request.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DemoComponent } from './components/demo/demo.component';
 import { FileFormComponent } from './components/file-form/file-form.component';
 
@@ -31,6 +31,7 @@ const bootstrapIcons = {
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     NgbModule,

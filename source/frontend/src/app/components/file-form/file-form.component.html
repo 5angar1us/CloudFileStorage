@@ -1,1 +1,5 @@
-<p>file-form works!</p>
+<h1>Angular 15 FormData (multipart/data-form) Example</h1>
+<form (ngSubmit)="uploadFiles()" #fileForm="ngForm">
+    <input type="file" name="files" multiple (change)="onFileChange($event)" />
+    <button type="submit">Загрузить</button>
+</form>
