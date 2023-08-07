@@ -12,6 +12,7 @@ import {AuthenticationService} from './services/authentication.service';
 import {AppComponent} from './app.component';
 import {RequestComponent} from './components/request/request.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { DemoComponent } from './components/demo/demo.component';
 
 const bootstrapIcons = {
   shield,
@@ -22,7 +23,8 @@ const bootstrapIcons = {
 @NgModule({
   declarations: [
     AppComponent,
-    RequestComponent
+    RequestComponent,
+    DemoComponent,
   ],
   imports: [
     BrowserModule,
