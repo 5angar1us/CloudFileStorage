@@ -50,9 +50,16 @@ namespace CloudFileStorage.Controllers
         }
 
         [HttpPost]
-        public async Task FileSet()
+        public async Task<IResult> FileSet()
         {
             MultipartFormDataParser multipartParser = await MultipartFormDataParser.ParseAsync(Request.Body).ConfigureAwait(false);
+
+            const int maxSizeInMB = 5;
+            const long maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+
+            if (multipartParser.Files.Any(x => x.Data.Length > maxSizeInBytes)) 
+                return Results.BadRequest($"At least one of the files is larger than the allowed size of {maxSizeInMB} MB");
+
             foreach (FilePart fileInfo in multipartParser.Files)
             {
                 MemoryStream memory = new MemoryStream();
@@ -62,6 +69,9 @@ namespace CloudFileStorage.Controllers
 
                 await minIOFileService.PutFile(fileInfo.FileName, memory);
             }
+
+            return Results.Ok();
+
         }
 
         [HttpDelete]
