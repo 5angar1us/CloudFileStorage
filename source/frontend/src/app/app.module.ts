@@ -14,6 +14,7 @@ import {RequestComponent} from './components/request/request.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DemoComponent } from './components/demo/demo.component';
 import { FileFormComponent } from './components/file-form/file-form.component';
+import { AlertModule } from './components/_alert';
 
 const bootstrapIcons = {
   shield,
@@ -36,6 +37,7 @@ const bootstrapIcons = {
     HttpClientModule,
     NgbModule,
     NgxBootstrapIconsModule.pick(bootstrapIcons),
+    AlertModule
   ],
   providers: [
     {

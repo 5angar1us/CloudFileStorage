@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AlertService } from '../_alert';
 
 @Component({
   selector: 'app-file-form',
@@ -10,7 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class FileFormComponent{
   selectedFiles: File[];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private alertService: AlertService) {
     this.selectedFiles = []
   }
 
@@ -27,10 +28,10 @@ export class FileFormComponent{
 
     this.http.post('http://localhost:5050/api/v1/File/FileSet', formData).subscribe(
       (response) => {
-        console.log('Успешно загружено');
+        this.alertService.success('Файл(ы) успешно загружен(ы)')
       },
       (error) => {
-        console.log('Ошибка при загрузке');
+        this.alertService.error(error.error);
       }
     );
   }
