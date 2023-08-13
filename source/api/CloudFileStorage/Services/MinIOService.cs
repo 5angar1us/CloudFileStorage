@@ -112,7 +112,8 @@ namespace CloudFileStorage.Services
             {
                 ListObjectsArgs args = new ListObjectsArgs()
                                               .WithBucket(bucket)
-                                              .WithRecursive(true);
+                                              .WithRecursive(true)
+                                              .WithPrefix(query);
 
                 IObservable<Item> items = minioClient.ListObjectsAsync(args) ?? Observable.Empty<Item>();
 
@@ -120,12 +121,12 @@ namespace CloudFileStorage.Services
 
                 if (String.IsNullOrEmpty(queryWithoutQuotesAndSpaces) == false && String.IsNullOrEmpty(query) == false)
                 {
-                    items = items.Where(x =>
-                    {
-                        return x.Key
-                        .ToLower()
-                        .Contains(query.ToLower());
-                    });
+                    //items = items.Where(x =>
+                    //{
+                    //    return x.Key
+                    //    .ToLower()
+                    //    .Contains(query.ToLower());
+                    //});
                 }
 
                 return await items.Select(x =>

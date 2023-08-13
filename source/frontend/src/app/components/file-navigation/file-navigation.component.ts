@@ -35,9 +35,9 @@ export class FileNavigationComponent implements OnInit, OnDestroy {
 
   navigationItems: NavigationItem [] = 
   [
-    { name: 'MyFiles', link : 'MyFiles'},
-    { name: 'University', link: "MyFiles/University"},
-    {name: 'English', link: 'MyFiles/University/English'}
+    { name: 'eve-files', link : 'eve-files'},
+    { name: 'folder1', link: "folder1"},
+    {name: 'folder2', link: 'folder1/folder2'}
   ]
 }
 

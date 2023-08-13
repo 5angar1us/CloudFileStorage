@@ -3,4 +3,13 @@
         <span>/ </span>
         <a [routerLink]="['/file-navigation']" [queryParams]="{path: navigationItem.link}" routerLinkActive="active" ariaCurrentWhenActive="page">{{navigationItem.name}}</a>
     </div>
+
+    
+</div>
+
+<div class="container">
+    <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'eve-files'}" routerLinkActive="active" ariaCurrentWhenActive="page">eve-files</a></p>
+    <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'folder1'}" routerLinkActive="active" ariaCurrentWhenActive="page">folder1</a></p>
+    <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'folder1/folder2'}" routerLinkActive="active" ariaCurrentWhenActive="page">folder1/folder2</a></p>
+    <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'folder2'}" routerLinkActive="active" ariaCurrentWhenActive="page">folder1/folder2</a></p>
 </div>
