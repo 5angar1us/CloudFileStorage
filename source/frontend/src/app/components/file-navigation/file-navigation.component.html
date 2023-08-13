@@ -1,0 +1,6 @@
+<div class="d-flex">
+    <div *ngFor="let navigationItem of navigationItems">
+        <span>/ </span>
+        <a [routerLink]="['/file-navigation']" [queryParams]="{path: navigationItem.link}" routerLinkActive="active" ariaCurrentWhenActive="page">{{navigationItem.name}}</a>
+    </div>
+</div>
