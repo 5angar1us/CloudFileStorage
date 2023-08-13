@@ -7,7 +7,7 @@ import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {path: 'demo', component: DemoComponent},
-  {path: 'file-form', component: FileFormComponent},
+  {path: 'file-form', component: FileFormComponent, canActivate: [authGuard]},
   {path: 'file-navigation', component: FileNavigationComponent, canActivate: [authGuard]}
 ];
 
