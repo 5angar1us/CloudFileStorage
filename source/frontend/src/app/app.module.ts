@@ -16,6 +16,7 @@ import { DemoComponent } from './components/demo/demo.component';
 import { FileFormComponent } from './components/file-form/file-form.component';
 import { AlertModule } from './components/_alert';
 import { FileNavigationComponent } from './components/file-navigation/file-navigation.component';
+import { SearchComponent } from './components/search/search.component';
 
 const bootstrapIcons = {
   shield,
@@ -29,7 +30,8 @@ const bootstrapIcons = {
     RequestComponent,
     DemoComponent,
     FileFormComponent,
-    FileNavigationComponent
+    FileNavigationComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

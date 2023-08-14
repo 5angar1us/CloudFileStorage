@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { S3Object } from '../../Models/S3Object';
 import { NavigationItem } from 'src/app/Models/NavigationItem';
+import { StringExtentions } from 'src/app/utils/string-extentions';
 
 @Component({
   selector: 'app-file-navigation',
@@ -37,7 +38,7 @@ export class FileNavigationComponent {
   private createNavigationItems(path: string) : NavigationItem[]{
     let processedPath = path.replace("\"", "").replace("\"", "").trim();
 
-    if(this.isStringEmpty(processedPath)) return [];
+    if(StringExtentions.isStringEmpty(processedPath)) return [];
 
     let pathParts : string[]  = processedPath.split("\/");
 
@@ -55,9 +56,7 @@ export class FileNavigationComponent {
     return navigationItems;
   }
 
-  private isStringEmpty(path: string) : boolean{
-    return typeof path === 'string' && path.trim().length === 0;
-  }
+  
 
   s3Objects : S3Object[] = []
 

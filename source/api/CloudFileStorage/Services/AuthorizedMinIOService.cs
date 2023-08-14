@@ -8,6 +8,8 @@ namespace CloudFileStorage.Api.Services
     public class AuthorizedMinIOService
     {
         private readonly MinIOService minIOService;
+        private const string emptyPath = "\"\"";
+
 
         public AuthorizedMinIOService(MinIOService minIOService)
         {
@@ -31,7 +33,7 @@ namespace CloudFileStorage.Api.Services
 
         public async Task<IEnumerable<FileDto>> Search(string userName, string query)
         {
-            return await minIOService.Search(Combine(userName, query));
+            return await minIOService.Search(Combine(userName, emptyPath), query);
         }
 
         public async Task<IEnumerable<FileDto>> SearchInFolders(string userName, string query)
