@@ -110,14 +110,17 @@ namespace CloudFileStorage.Services
         {
             try
             {
+
+                var queryWithoutQuotesAndSpaces = query.Replace("\"", "").Trim();
+
                 ListObjectsArgs args = new ListObjectsArgs()
                                               .WithBucket(bucket)
-                                              .WithRecursive(true)
-                                              .WithPrefix(query);
+                                              .WithRecursive(false)
+                                              .WithPrefix(queryWithoutQuotesAndSpaces);
 
                 IObservable<Item> items = minioClient.ListObjectsAsync(args) ?? Observable.Empty<Item>();
 
-                var queryWithoutQuotesAndSpaces = query.Replace("\"", "").Trim();
+                
 
                 if (String.IsNullOrEmpty(queryWithoutQuotesAndSpaces) == false && String.IsNullOrEmpty(query) == false)
                 {
@@ -135,7 +138,8 @@ namespace CloudFileStorage.Services
                     {
                         Size = x.Size,
                         DateTime = x?.LastModifiedDateTime,
-                        Path = x.Key
+                        Path = x.Key,
+                        IsDir = x.IsDir
                     };
 
                 }).ToList();

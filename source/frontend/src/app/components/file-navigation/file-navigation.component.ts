@@ -9,36 +9,64 @@ import { filter } from 'rxjs';
   templateUrl: './file-navigation.component.html',
   styleUrls: ['./file-navigation.component.scss']
 })
-export class FileNavigationComponent implements OnInit, OnDestroy {
+export class FileNavigationComponent {
   private path : string = "";
-  private sub: any;
+  private readonly emptyPath : string = "\"\""
+
 
   constructor(private http: HttpClient, private route: ActivatedRoute){
 
     this.route.queryParams.subscribe((params) => {
-      this.path = params['path'] ?? "\"\"";
+      this.path = params['path'] ?? this.emptyPath;
 
-      console.log(`path ${this.path}`)
-      this.http.get('http://localhost:5050/api/v1/File/Search', { params: { query: this.path}}).subscribe({
-        next : (respone) => console.log(respone),
+      this.navigationItems = this.createNavigationItems(this.path);
+
+      this.http.get<S3Object[]>('http://localhost:5050/api/v1/File/Search', { params: { query: this.path}}).subscribe({
+        next : (respone) => {
+          console.log(respone)
+          this.s3Objects = respone;
+        },
         error: (e) => console.error(e)
-    });
+        });
     });    
   }
-  
-  ngOnInit() {
+
+
+  private createNavigationItems(path: string) : NavigationItem[]{
+    let processedPath = path.replace("\"", "").replace("\"", "").trim();
+
+    if(this.isStringEmpty(processedPath)) return [];
+
+    let pathParts : string[]  = processedPath.split("\/");
+
+    let navigationItems: NavigationItem[] = []
+
+    let accumulator = "";
+    for(let i = 0; i < pathParts.length; i++){
+      let part = pathParts[i];
+
+      accumulator = accumulator.concat(part,"/");
+
+      navigationItems.push({name: part, link: accumulator})
+    }
+
+    return navigationItems;
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+  private isStringEmpty(path: string) : boolean{
+    return typeof path === 'string' && path.trim().length === 0;
   }
 
-  navigationItems: NavigationItem [] = 
-  [
-    { name: 'eve-files', link : 'eve-files'},
-    { name: 'folder1', link: "folder1"},
-    {name: 'folder2', link: 'folder1/folder2'}
-  ]
+  s3Objects : S3Object[] = []
+
+  navigationItems: NavigationItem [] = []
+}
+
+interface S3Object {
+  datetime: string,
+  isDir: boolean,
+  path: string,
+  size: number
 }
 
 interface NavigationItem{

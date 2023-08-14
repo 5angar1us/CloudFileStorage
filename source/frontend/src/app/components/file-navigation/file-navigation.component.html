@@ -1,15 +1,39 @@
+<div class="container">
+  <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'eve-files/'}" routerLinkActive="active" ariaCurrentWhenActive="page">eve-files</a></p>
+  <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'folder1/'}" routerLinkActive="active" ariaCurrentWhenActive="page">folder1</a></p>
+  <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'folder1/folder2/'}" routerLinkActive="active" ariaCurrentWhenActive="page">folder1/folder2</a></p>
+  <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'folder2/'}" routerLinkActive="active" ariaCurrentWhenActive="page">eve-files : folder2</a></p>
+</div>
+
 <div class="d-flex">
+
+    <div *ngIf="navigationItems.length == 0">
+        <span>/ </span>
+    </div>
     <div *ngFor="let navigationItem of navigationItems">
         <span>/ </span>
         <a [routerLink]="['/file-navigation']" [queryParams]="{path: navigationItem.link}" routerLinkActive="active" ariaCurrentWhenActive="page">{{navigationItem.name}}</a>
     </div>
 
-    
 </div>
 
 <div class="container">
-    <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'eve-files'}" routerLinkActive="active" ariaCurrentWhenActive="page">eve-files</a></p>
-    <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'folder1'}" routerLinkActive="active" ariaCurrentWhenActive="page">folder1</a></p>
-    <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'folder1/folder2'}" routerLinkActive="active" ariaCurrentWhenActive="page">folder1/folder2</a></p>
-    <p><a [routerLink]="['/file-navigation']" [queryParams]="{path: 'folder2'}" routerLinkActive="active" ariaCurrentWhenActive="page">folder1/folder2</a></p>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Size</th>
+            <th scope="col">IsDir</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let s3Object of s3Objects; let indexOfElement=index">
+          <tr>
+            <th scope="row">{{indexOfElement + 1 }}</th>
+            <td>{{s3Object.path}}</td>
+            <td>{{s3Object.size}}</td>
+            <td>{{s3Object.isDir}}</td>
+          </tr>
+        </tbody>
+    </table>
 </div>

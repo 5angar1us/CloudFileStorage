@@ -1,3 +1,4 @@
+using CloudFileStorage.Api.Services;
 using CloudFileStorage.Services;
 using CloudFileStorage.Startup;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,7 @@ builder.Services.AddMinio(options =>
 });
 
 builder.Services.AddTransient<MinIOService>();
+builder.Services.AddTransient<AuthorizedMinIOService>();
 
 var app = builder.Build();
 

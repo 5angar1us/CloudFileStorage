@@ -1,4 +1,5 @@
-﻿using CloudFileStorage.DTOs;
+﻿using CloudFileStorage.Api.Services;
+using CloudFileStorage.DTOs;
 using CloudFileStorage.Routing;
 using CloudFileStorage.Services;
 using HttpMultipartParser;
@@ -12,28 +13,28 @@ namespace CloudFileStorage.Controllers
     [ApiV1Controller]
     public class FileController : Controller
     {
-        MinIOService minIOFileService;
+        AuthorizedMinIOService authorizedMinIOService;
 
-        public FileController(MinIOService minIOFileService)
+        public FileController(AuthorizedMinIOService authorizedMinIOService)
         {
-            this.minIOFileService = minIOFileService;
+            this.authorizedMinIOService = authorizedMinIOService;
         }
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> Search(string query)
         {
-            var items = await minIOFileService.Search(query);
+            var items = await authorizedMinIOService.Search(GetUserName(), query);
 
             return Ok(items);
         }
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> FileGet(string path)
         {
             var memoryStream = new MemoryStream();
-            var objectStat = await minIOFileService.GetFile(path, (stream) =>
+            var objectStat = await authorizedMinIOService.GetFile(GetUserName(), path, (stream) =>
             {
                 if (stream != null)
                 {
@@ -50,6 +51,7 @@ namespace CloudFileStorage.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IResult> FileSet()
         {
             MultipartFormDataParser multipartParser = await MultipartFormDataParser.ParseAsync(Request.Body).ConfigureAwait(false);
@@ -67,7 +69,7 @@ namespace CloudFileStorage.Controllers
                 fileInfo.Data.CopyTo(memory);
                 memory.Seek(0, SeekOrigin.Begin);
 
-                await minIOFileService.PutFile(fileInfo.FileName, memory);
+                await authorizedMinIOService.PutFile(GetUserName(), fileInfo.FileName, memory);
             }
 
             return Results.Ok();
@@ -75,19 +77,19 @@ namespace CloudFileStorage.Controllers
         }
 
         [HttpDelete]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> FileDelete(string path)
         {
-           await minIOFileService.Remove(path);
+           await authorizedMinIOService.Remove(GetUserName(), path);
 
             return Ok();
         }
 
         [HttpPatch]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> FilePatch(string path, string newPath)
         {
-            await minIOFileService.Replace(path, newPath);
+            await authorizedMinIOService.Replace(GetUserName(), path, newPath);
 
             return Ok();
         }
