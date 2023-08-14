@@ -3,6 +3,8 @@ import { parseHostBindings } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { S3Object } from '../../Models/S3Object';
+import { NavigationItem } from 'src/app/Models/NavigationItem';
 
 @Component({
   selector: 'app-file-navigation',
@@ -62,14 +64,3 @@ export class FileNavigationComponent {
   navigationItems: NavigationItem [] = []
 }
 
-interface S3Object {
-  datetime: string,
-  isDir: boolean,
-  path: string,
-  size: number
-}
-
-interface NavigationItem{
-  name: string,
-  link: string
-}
