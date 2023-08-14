@@ -22,6 +22,15 @@ namespace CloudFileStorage.Controllers
 
         [HttpGet]
         [Authorize]
+        public async Task<IActionResult> SearchInFolders(string query)
+        {
+            var items = await authorizedMinIOService.SearchInFolders(GetUserName(), query);
+
+            return Ok(items);
+        }
+
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Search(string query)
         {
             var items = await authorizedMinIOService.Search(GetUserName(), query);

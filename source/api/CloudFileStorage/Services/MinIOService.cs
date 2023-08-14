@@ -106,7 +106,7 @@ namespace CloudFileStorage.Services
 
         }
 
-        public async Task<IEnumerable<FileDto>> Search(string query)
+        public async Task<IEnumerable<FileDto>> SearchInFolders(string query)
         {
             try
             {
@@ -121,6 +121,49 @@ namespace CloudFileStorage.Services
                 IObservable<Item> items = minioClient.ListObjectsAsync(args) ?? Observable.Empty<Item>();
 
                 
+
+                if (String.IsNullOrEmpty(queryWithoutQuotesAndSpaces) == false && String.IsNullOrEmpty(query) == false)
+                {
+                    //items = items.Where(x =>
+                    //{
+                    //    return x.Key
+                    //    .ToLower()
+                    //    .Contains(query.ToLower());
+                    //});
+                }
+
+                return await items.Select(x =>
+                {
+                    return new FileDto()
+                    {
+                        Size = x.Size,
+                        DateTime = x?.LastModifiedDateTime,
+                        Path = x.Key,
+                        IsDir = x.IsDir
+                    };
+
+                }).ToList();
+            }
+            catch (MinioException e)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<FileDto>> Search(string query)
+        {
+            try
+            {
+                var queryWithoutQuotesAndSpaces = query.Replace("\"", "").Trim();
+
+                ListObjectsArgs args = new ListObjectsArgs()
+                                              .WithBucket(bucket)
+                                              .WithRecursive(true)
+                                              .WithPrefix(queryWithoutQuotesAndSpaces);
+
+                IObservable<Item> items = minioClient.ListObjectsAsync(args) ?? Observable.Empty<Item>();
+
+
 
                 if (String.IsNullOrEmpty(queryWithoutQuotesAndSpaces) == false && String.IsNullOrEmpty(query) == false)
                 {

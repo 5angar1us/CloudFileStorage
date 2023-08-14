@@ -33,6 +33,11 @@ namespace CloudFileStorage.Api.Services
         {
             return await minIOService.Search(Combine(userName, query));
         }
+
+        public async Task<IEnumerable<FileDto>> SearchInFolders(string userName, string query)
+        {
+            return await minIOService.SearchInFolders(Combine(userName, query));
+        }
         public async Task Remove(string username, string path)
         {
             await minIOService.Remove(Combine(username, path));

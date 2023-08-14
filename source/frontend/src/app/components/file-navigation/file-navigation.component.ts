@@ -23,7 +23,7 @@ export class FileNavigationComponent {
 
       this.navigationItems = this.createNavigationItems(this.path);
 
-      this.http.get<S3Object[]>('http://localhost:5050/api/v1/File/Search', { params: { query: this.path}}).subscribe({
+      this.http.get<S3Object[]>('http://localhost:5050/api/v1/File/SearchInFolders', { params: { query: this.path}}).subscribe({
         next : (respone) => {
           console.log(respone)
           this.s3Objects = respone;
