@@ -21,7 +21,7 @@ export class SearchComponent {
   seachFile(){
     console.log("searchFile start")
 
-    if(StringExtentions.isStringEmpty(this.fileName)== false){
+    if(StringExtentions.isEmpty(this.fileName)== false){
       this.http.get<S3Object[]>('http://localhost:5050/api/v1/File/Search', { params: { query: this.fileName}}).subscribe({
         next : (respone) => {
           console.log(respone)

@@ -38,7 +38,7 @@ export class FileNavigationComponent {
   private createNavigationItems(path: string) : NavigationItem[]{
     let processedPath = path.replace("\"", "").replace("\"", "").trim();
 
-    if(StringExtentions.isStringEmpty(processedPath)) return [];
+    if(StringExtentions.isEmpty(processedPath)) return [];
 
     let pathParts : string[]  = processedPath.split("\/");
 
