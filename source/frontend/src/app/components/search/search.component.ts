@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { S3Object } from 'src/app/Models/S3Object';
 import { StringExtentions } from 'src/app/utils/string-extentions';
 
@@ -8,29 +9,33 @@ import { StringExtentions } from 'src/app/utils/string-extentions';
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit {
 
   public fileName: string = "";
 
+  private readonly emptyPath : string = "\"\""
+
   public s3Objects : S3Object[] = []
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
   
   }
+  ngOnInit(): void {
 
-  seachFile(){
-    console.log("searchFile start")
+    this.route.queryParams.subscribe((params) => {
+      let fileName = params['path'] ?? this.emptyPath;
 
-    if(StringExtentions.isEmpty(this.fileName)== false){
-      this.http.get<S3Object[]>('http://localhost:5050/api/v1/File/Search', { params: { query: this.fileName}}).subscribe({
+      this.http.get<S3Object[]>('http://localhost:5050/api/v1/File/Search', { params: { query: fileName}}).subscribe({
         next : (respone) => {
           console.log(respone)
           this.s3Objects = respone;
         },
         error: (e) => console.error(e)
         });
-    }
-    
-    
+      
+    });    
   }
+  onSubmit() {
+    this.router.navigateByUrl('/search?query=' + this.fileName)
+ }
 }

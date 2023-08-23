@@ -10,27 +10,9 @@
             [(ngModel)] ="fileName"
             name="fileName"
         />
-        <button (click)="seachFile()" type="button" class="btn btn-primary">Search</button>
+        <button (click)="onSubmit()" type="button" class="btn btn-primary">Search</button>
       </div>
 </form>
-<div *ngIf="s3Objects.length != 0" class="container" >
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Size</th>
-            <th scope="col">IsDir</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let s3Object of s3Objects; let indexOfElement=index">
-          <tr>
-            <th scope="row">{{indexOfElement + 1 }}</th>
-            <td>{{s3Object.path}}</td>
-            <td>{{s3Object.size}}</td>
-            <td>{{s3Object.isDir}}</td>
-          </tr>
-        </tbody>
-    </table>
-</div>
+<app-file-table [s3Objects] = "s3Objects"></app-file-table>
+
 
