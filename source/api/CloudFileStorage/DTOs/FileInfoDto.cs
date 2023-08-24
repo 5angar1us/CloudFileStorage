@@ -1,6 +1,6 @@
 ﻿namespace CloudFileStorage.DTOs
 {
-    public class FileDto
+    public class FileInfoDto
     {
         public ulong Size { get; set; }
 

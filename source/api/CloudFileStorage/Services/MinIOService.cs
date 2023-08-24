@@ -106,7 +106,7 @@ namespace CloudFileStorage.Services
 
         }
 
-        public async Task<IEnumerable<FileDto>> SearchInFolders(string query)
+        public async Task<IEnumerable<FileInfoDto>> SearchInFolders(string query)
         {
             try
             {
@@ -121,7 +121,7 @@ namespace CloudFileStorage.Services
 
                 return await items.Select(x =>
                 {
-                    return new FileDto()
+                    return new FileInfoDto()
                     {
                         Size = x.Size,
                         DateTime = x.LastModifiedDateTime,
@@ -137,7 +137,7 @@ namespace CloudFileStorage.Services
             }
         }
 
-        public async Task<IEnumerable<FileDto>> Search(string basePath, string query)
+        public async Task<IEnumerable<FileInfoDto>> Search(string basePath, string query)
         {
             try
             {
@@ -164,7 +164,7 @@ namespace CloudFileStorage.Services
 
                 return await items.Select(x =>
                 {
-                    return new FileDto()
+                    return new FileInfoDto()
                     {
                         Size = x.Size,
                         DateTime = x.LastModifiedDateTime,
@@ -180,7 +180,7 @@ namespace CloudFileStorage.Services
             }
         }
 
-        public async Task<IEnumerable<FileDto>> SearchByPrefix(string query)
+        public async Task<IEnumerable<FileInfoDto>> SearchByPrefix(string query)
         {
             try
             {
@@ -193,7 +193,7 @@ namespace CloudFileStorage.Services
 
                 return await items.Select(x =>
                 {
-                    return new FileDto()
+                    return new FileInfoDto()
                     {
                         Size = x.Size,
                         DateTime = x?.LastModifiedDateTime,

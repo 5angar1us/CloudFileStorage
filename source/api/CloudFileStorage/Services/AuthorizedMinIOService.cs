@@ -1,6 +1,8 @@
 ﻿using CloudFileStorage.DTOs;
 using CloudFileStorage.Services;
+using Microsoft.Extensions.FileProviders;
 using Minio.DataModel;
+using System.Collections.Generic;
 using System.IO;
 
 namespace CloudFileStorage.Api.Services
@@ -31,29 +33,46 @@ namespace CloudFileStorage.Api.Services
             await this.minIOService.Replace(Combine(userName, path), Combine(userName, newPath));
         }
 
-        public async Task<IEnumerable<FileDto>> Search(string userName, string query)
+        public async Task<IEnumerable<FileInfoDto>> Search(string userName, string query)
         {
-            return await minIOService.Search(Combine(userName, emptyPath), query);
+            IEnumerable<FileInfoDto> fileInfos = await minIOService.Search(Combine(userName, emptyPath), query);
+
+            return RemoveUserName(fileInfos);
         }
 
-        public async Task<IEnumerable<FileDto>> SearchInFolders(string userName, string query)
+        public async Task<IEnumerable<FileInfoDto>> SearchInFolders(string userName, string query)
         {
-            return await minIOService.SearchInFolders(Combine(userName, query));
+            IEnumerable<FileInfoDto> fileInfos = await minIOService.SearchInFolders(Combine(userName, query));
+
+            return RemoveUserName(fileInfos);
         }
         public async Task Remove(string username, string path)
         {
             await minIOService.Remove(Combine(username, path));
         }
 
+        private IEnumerable<FileInfoDto> RemoveUserName(IEnumerable<FileInfoDto> fileInfos)
+        {
+            return fileInfos.Select(x =>
+            {
+                var userSlashIndex = x.Path.IndexOf("/");
+                var skipedUserAndSlah = x.Path.Substring(userSlashIndex + 1);
+
+                x.Path = skipedUserAndSlah;
+
+                return x;
+            });
+        }
+
         private string Combine(string userName, string path)
         {
             var userFiles = $"{userName}-files";
 
-            var pathWithoutQuotesAndSpaces = path.Replace("\"", "").Trim();
+            var currentPath = path;
 
-            return String.IsNullOrEmpty(pathWithoutQuotesAndSpaces) 
-                ? $"{userFiles}/" 
-                : $"{userFiles}/{pathWithoutQuotesAndSpaces}";
+            if (path.Equals(emptyPath)) { currentPath = ""; }
+            
+            return $"{userFiles}/{currentPath}";
         }
     }
 }

@@ -23,7 +23,9 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.queryParams.subscribe((params) => {
-      let fileName = params['path'] ?? this.emptyPath;
+      let fileName = params['query'];
+
+      if(StringExtentions.isEmpty(fileName)) return
 
       this.http.get<S3Object[]>('http://localhost:5050/api/v1/File/Search', { params: { query: fileName}}).subscribe({
         next : (respone) => {
