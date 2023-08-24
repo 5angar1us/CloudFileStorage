@@ -6,10 +6,12 @@
 </div>
 
 <div class="d-flex">
-
+    <a [routerLink]="['/file-navigation']" routerLinkActive="active" ariaCurrentWhenActive="page">root</a>
     <div *ngIf="navigationItems.length == 0">
+
         <span>/ </span>
     </div>
+   
     <div *ngFor="let navigationItem of navigationItems">
         <span>/ </span>
         <a [routerLink]="['/file-navigation']" [queryParams]="{path: navigationItem.link}" routerLinkActive="active" ariaCurrentWhenActive="page">{{navigationItem.name}}</a>
