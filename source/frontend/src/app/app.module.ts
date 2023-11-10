@@ -19,6 +19,7 @@ import { FileNavigationComponent } from './components/file-navigation/file-navig
 import { SearchComponent } from './components/search/search.component';
 import { FileTableComponent } from './components/file-table/file-table.component';
 import { SystemComponent } from './components/system/system.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const bootstrapIcons = {
   shield,
@@ -45,7 +46,8 @@ const bootstrapIcons = {
     HttpClientModule,
     NgbModule,
     NgxBootstrapIconsModule.pick(bootstrapIcons),
-    AlertModule
+    AlertModule,
+    FontAwesomeModule
   ],
   providers: [
     {
