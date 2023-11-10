@@ -2,18 +2,30 @@
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Size</th>
-            <th scope="col">IsDir</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody *ngFor="let s3Object of s3Objects; let indexOfElement=index">
           <tr>
-            <th scope="row">{{indexOfElement + 1 }}</th>
-            <td>{{s3Object.path}}</td>
+            <td> 
+              <div class="row">
+                <div *ngIf="s3Object.isDir; else objectIcon">
+                  <fa-icon [icon]="faFolder"></fa-icon>
+                </div>
+                <ng-template #objectIcon>
+                  <fa-icon [icon]="faFile"></fa-icon>
+                </ng-template>
+                <p>
+                  <a [routerLink]="['/file-navigation']" [queryParams]="{path: s3Object.path}" routerLinkActive="active" ariaCurrentWhenActive="page">{{s3Object.path}}</a>
+                </p>
+              </div>
+            </td>
             <td>{{s3Object.size}}</td>
-            <td>{{s3Object.isDir}}</td>
+
+            
+
           </tr>
         </tbody>
     </table>

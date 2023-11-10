@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { S3Object } from 'src/app/Models/S3Object';
+import { faFolder,  faFile } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-file-table',
@@ -8,4 +9,6 @@ import { S3Object } from 'src/app/Models/S3Object';
 })
 export class FileTableComponent {
   @Input() public s3Objects : S3Object[] = []
+  faFolder = faFolder;
+  faFile = faFile;
 }
