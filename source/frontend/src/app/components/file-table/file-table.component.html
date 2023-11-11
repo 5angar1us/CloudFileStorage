@@ -29,7 +29,7 @@
                   ...
                 </button>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                  <button ngbDropdownItem>Download</button>
+                  <button (click)="donloadFile(s3Object.path, s3Object.path)" ngbDropdownItem>Download</button>
                   <button ngbDropdownItem>Rename</button>
                   <button ngbDropdownItem>Move</button>
                   <button ngbDropdownItem>Delete</button>
