@@ -4,7 +4,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {Observable} from 'rxjs';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDropdownModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxBootstrapIconsModule, shield, shieldShaded, shieldFill} from 'ngx-bootstrap-icons';
 
 import {AuthenticationInterceptor} from './services/authentication.interceptor';
@@ -43,6 +43,7 @@ const bootstrapIcons = {
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
+    NgbDropdownModule, 
     HttpClientModule,
     NgbModule,
     NgxBootstrapIconsModule.pick(bootstrapIcons),
