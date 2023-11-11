@@ -23,9 +23,19 @@
               </div>
             </td>
             <td>{{s3Object.size}}</td>
-
-            
-
+            <td>
+              <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                  ...
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button ngbDropdownItem>Download</button>
+                  <button ngbDropdownItem>Rename</button>
+                  <button ngbDropdownItem>Move</button>
+                  <button ngbDropdownItem>Delete</button>
+                </div>
+              </div>
+            </td>
           </tr>
         </tbody>
     </table>
