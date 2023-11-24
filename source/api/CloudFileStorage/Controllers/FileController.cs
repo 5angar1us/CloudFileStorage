@@ -1,10 +1,12 @@
-﻿using CloudFileStorage.Api.Services;
+﻿using CloudFileStorage.Api.DTOs;
+using CloudFileStorage.Api.Services;
 using CloudFileStorage.DTOs;
 using CloudFileStorage.Routing;
 using CloudFileStorage.Services;
 using HttpMultipartParser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -96,9 +98,9 @@ namespace CloudFileStorage.Controllers
 
         [HttpPatch]
         [Authorize]
-        public async Task<IActionResult> FilePatch(string path, string newPath)
+        public async Task<IActionResult> FilePatch([Required]FilePatchDTO dto)
         {
-            await authorizedMinIOService.Replace(GetUserName(), path, newPath);
+            await authorizedMinIOService.Replace(GetUserName(), dto.Path, dto.NewPath);
 
             return Ok();
         }

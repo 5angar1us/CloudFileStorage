@@ -20,6 +20,7 @@ import { SearchComponent } from './components/search/search.component';
 import { FileTableComponent } from './components/file-table/file-table.component';
 import { SystemComponent } from './components/system/system.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RenameModalComponent } from './components/rename-modal/rename-modal.component';
 
 const bootstrapIcons = {
   shield,
@@ -36,7 +37,8 @@ const bootstrapIcons = {
     FileNavigationComponent,
     SearchComponent,
     FileTableComponent,
-    SystemComponent
+    SystemComponent,
+    RenameModalComponent
   ],
   imports: [
     BrowserModule,

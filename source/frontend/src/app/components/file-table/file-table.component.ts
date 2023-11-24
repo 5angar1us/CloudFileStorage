@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { S3Object } from 'src/app/Models/S3Object';
 import { faFolder,  faFile } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RenameModalComponent } from '../rename-modal/rename-modal.component';
 
 @Component({
   selector: 'app-file-table',
@@ -10,10 +12,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FileTableComponent {
   @Input() public s3Objects : S3Object[] = []
+  @Output() onChanged = new EventEmitter<void>();
   faFolder = faFolder;
   faFile = faFile;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private modalService: NgbModal) {}
 
   donloadFile(path : string, fileName : string){
     this.http.get('http://localhost:5050/api/v1/File/FileGet',{ observe:'response', responseType: 'blob' , params: { path: path}}).subscribe({
@@ -29,5 +32,17 @@ export class FileTableComponent {
       },
       error: (e) => console.error(e)
       });
+  }
+  renameFile(path : string){
+    const modalRef = this.modalService.open(RenameModalComponent);
+		modalRef.componentInstance.currentPath = path;
+
+    modalRef.result.then(() => {
+      this.onChanged.emit();
+    },
+    (error) => {
+      console.log(error)
+    });
+
   }
 }

@@ -16,6 +16,9 @@ export class FileNavigationComponent {
   private path : string = "";
   private readonly emptyPath : string = "\"\""
 
+  s3Objects : S3Object[] = []
+
+  navigationItems: NavigationItem [] = []
 
   constructor(private http: HttpClient, private route: ActivatedRoute){
 
@@ -24,16 +27,23 @@ export class FileNavigationComponent {
 
       this.navigationItems = this.createNavigationItems(this.path);
 
-      this.http.get<S3Object[]>('http://localhost:5050/api/v1/File/SearchInFolders', { params: { query: this.path}}).subscribe({
+      this.loadData();
+    });    
+  }
+
+  S3ObjectsChanged(){
+    this.loadData();
+}
+
+  private loadData(){
+    this.http.get<S3Object[]>('http://localhost:5050/api/v1/File/SearchInFolders', { params: { query: this.path}}).subscribe({
         next : (respone) => {
           console.log(respone)
           this.s3Objects = respone;
         },
         error: (e) => console.error(e)
         });
-    });    
   }
-
 
   private createNavigationItems(path: string) : NavigationItem[]{
     let processedPath = path.replace("\"", "").replace("\"", "").trim();
@@ -56,10 +66,5 @@ export class FileNavigationComponent {
     return navigationItems;
   }
 
-  
-
-  s3Objects : S3Object[] = []
-
-  navigationItems: NavigationItem [] = []
 }
 

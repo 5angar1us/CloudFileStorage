@@ -19,4 +19,4 @@
 
 </div>
 
-<app-file-table [s3Objects] = "s3Objects"></app-file-table>
+<app-file-table [s3Objects] = "s3Objects" (onS3ObjectsChanged) ="S3ObjectsChanged()"></app-file-table>
