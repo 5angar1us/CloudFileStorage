@@ -20,7 +20,6 @@ export class FileTableComponent {
 
   constructor(
     private http: HttpClient, 
-    private modalService: NgbModal,
     private modalFactory : ModalFactory
     ) {}
 
@@ -50,7 +49,7 @@ export class FileTableComponent {
     });
   }
 
-  moveFilepath(path : string){
+  moveFile(path : string){
     const modalRef = this.modalFactory.createMoveModal(path)
 
     modalRef.result.then(() => {
@@ -60,4 +59,16 @@ export class FileTableComponent {
       console.log(error)
     });
   }
+
+  deleteFile(path: string){
+    const modalRef = this.modalFactory.createDeleteModal(path)
+
+    modalRef.result.then(() => {
+      this.onS3ObjectsChanged.emit();
+    },
+    (error) => {
+      console.log(error)
+    });
+  }
+
 }

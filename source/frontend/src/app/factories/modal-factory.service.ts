@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { MoveModalComponent } from '../components/move-modal/move-modal.component';
 import { RenameModalComponent } from '../components/rename-modal/rename-modal.component';
+import { DeleteModalComponentComponent } from '../components/delete-modal-component/delete-modal-component.component';
 
 @Injectable({
     providedIn: 'root'
@@ -9,6 +10,16 @@ import { RenameModalComponent } from '../components/rename-modal/rename-modal.co
 export class ModalFactory {
 
     constructor(private modalService: NgbModal) { }
+
+    public createDeleteModal(path: string){
+        const { fileName: fileName } = this.splitFilePathOnParts(path);
+
+        const modalRef = this.modalService.open(DeleteModalComponentComponent);
+        modalRef.componentInstance.currentPath = path;
+        modalRef.componentInstance.fileName = fileName;
+
+        return modalRef
+    }
 
     public createMoveModal(path: string) {
         const { fileName: fileName, folderPath: newFolderPath } = this.splitFilePathOnParts(path);

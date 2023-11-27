@@ -89,9 +89,9 @@ namespace CloudFileStorage.Controllers
 
         [HttpDelete]
         [Authorize]
-        public async Task<IActionResult> FileDelete(string path)
+        public async Task<IActionResult> FileDelete([Required] FileDeleteDto dto)
         {
-           await authorizedMinIOService.Remove(GetUserName(), path);
+           await authorizedMinIOService.Remove(GetUserName(), dto.path);
 
             return Ok();
         }

@@ -22,6 +22,7 @@ import { SystemComponent } from './components/system/system.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RenameModalComponent } from './components/rename-modal/rename-modal.component';
 import { MoveModalComponent } from './components/move-modal/move-modal.component';
+import { DeleteModalComponentComponent } from './components/delete-modal-component/delete-modal-component.component';
 
 const bootstrapIcons = {
   shield,
@@ -40,7 +41,8 @@ const bootstrapIcons = {
     FileTableComponent,
     SystemComponent,
     RenameModalComponent,
-    MoveModalComponent
+    MoveModalComponent,
+    DeleteModalComponentComponent
   ],
   imports: [
     BrowserModule,

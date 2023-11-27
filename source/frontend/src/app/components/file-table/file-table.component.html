@@ -31,8 +31,8 @@
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                   <button (click)="donloadFile(s3Object.path, s3Object.path)" ngbDropdownItem>Download</button>
                   <button (click)="renameFile(s3Object.path)" ngbDropdownItem>Rename</button>
-                  <button (click)="moveFilepath(s3Object.path)" ngbDropdownItem>Move</button>
-                  <button ngbDropdownItem>Delete</button>
+                  <button (click)="moveFile(s3Object.path)" ngbDropdownItem>Move</button>
+                  <button (click)="deleteFile(s3Object.path)"ngbDropdownItem>Delete</button>
                 </div>
               </div>
             </td>
