@@ -12,7 +12,7 @@ import { RenameModalComponent } from '../rename-modal/rename-modal.component';
 })
 export class FileTableComponent {
   @Input() public s3Objects : S3Object[] = []
-  @Output() onChanged = new EventEmitter<void>();
+  @Output() onS3ObjectsChanged = new EventEmitter<void>();
   faFolder = faFolder;
   faFile = faFile;
 
@@ -38,7 +38,7 @@ export class FileTableComponent {
 		modalRef.componentInstance.currentPath = path;
 
     modalRef.result.then(() => {
-      this.onChanged.emit();
+      this.onS3ObjectsChanged.emit();
     },
     (error) => {
       console.log(error)
