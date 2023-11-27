@@ -4,6 +4,8 @@ import { faFolder,  faFile } from '@fortawesome/free-solid-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RenameModalComponent } from '../rename-modal/rename-modal.component';
+import { MoveModalComponent } from '../move-modal/move-modal.component';
+import { ModalFactory } from 'src/app/factories/modal-factory.service';
 
 @Component({
   selector: 'app-file-table',
@@ -16,7 +18,11 @@ export class FileTableComponent {
   faFolder = faFolder;
   faFile = faFile;
 
-  constructor(private http: HttpClient, private modalService: NgbModal) {}
+  constructor(
+    private http: HttpClient, 
+    private modalService: NgbModal,
+    private modalFactory : ModalFactory
+    ) {}
 
   donloadFile(path : string, fileName : string){
     this.http.get('http://localhost:5050/api/v1/File/FileGet',{ observe:'response', responseType: 'blob' , params: { path: path}}).subscribe({
@@ -34,8 +40,7 @@ export class FileTableComponent {
       });
   }
   renameFile(path : string){
-    const modalRef = this.modalService.open(RenameModalComponent);
-		modalRef.componentInstance.currentPath = path;
+    const modalRef = this.modalFactory.createRenameModal(path);
 
     modalRef.result.then(() => {
       this.onS3ObjectsChanged.emit();
@@ -43,6 +48,16 @@ export class FileTableComponent {
     (error) => {
       console.log(error)
     });
+  }
 
+  moveFilepath(path : string){
+    const modalRef = this.modalFactory.createMoveModal(path)
+
+    modalRef.result.then(() => {
+      this.onS3ObjectsChanged.emit();
+    },
+    (error) => {
+      console.log(error)
+    });
   }
 }

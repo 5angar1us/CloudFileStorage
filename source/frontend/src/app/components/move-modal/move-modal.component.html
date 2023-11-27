@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Profile deletion</h4>
+    <button
+        type="button"
+        class="btn-close"
+        aria-describedby="modal-title"
+        (click)="modal.dismiss('Cross click')"
+    ></button>
+</div>
+<div class="modal-body">
+    <form #f="ngForm" (ngSubmit)="rename(f)" novalidate>
+        <div class="form-group">
+            <label for="currentPath">Current path</label>
+            <div class ="input-group">
+                <input id="currentPath" name="currentPath" class="form-control" [ngModel]="currentPath" disabled=""> 
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="newPath">New path</label>
+            <div class="input-group mb-3">
+                <input id="newFolderPath" name="newFolderPath" class="form-control" [(ngModel)]="newFolderPath"> 
+                <span class="input-group-text">/</span>
+                <input id="fileName" name="fileName" class="form-control" [(ngModel)]="fileName"> 
+            </div>
+        </div>
+        <button data-dismiss="modal" type="submit" class="btn btn-danger">Ok</button>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">Cancel</button>
+</div>
