@@ -3,4 +3,5 @@ export interface S3Object {
   isDir: boolean;
   path: string;
   size: number;
+  name: string;
 }

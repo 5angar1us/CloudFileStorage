@@ -3,7 +3,7 @@
         <thead>
           <tr>
             <th scope="col">Name</th>
-            <th scope="col">Size</th>
+            <th scope="col">Size (bytes)</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -11,16 +11,23 @@
           <tr>
             <td> 
               <div class="row">
-                <div *ngIf="s3Object.isDir; else objectIcon">
+                <div *ngIf="s3Object.isDir; else objectIconIf">
                   <fa-icon [icon]="faFolder"></fa-icon>
                 </div>
-                <ng-template #objectIcon>
+                <ng-template #objectIconIf>
                   <fa-icon [icon]="faFile"></fa-icon>
                 </ng-template>
-                <p>
-                  <a [routerLink]="['/file-navigation']" [queryParams]="{path: s3Object.path}" routerLinkActive="active" ariaCurrentWhenActive="page">{{s3Object.path}}</a>
-                </p>
+                
+                <div *ngIf="s3Object.isDir; else fileNameIf">
+                  <p>
+                    <a [routerLink]="['/file-navigation']" [queryParams]="{path: s3Object.path}" routerLinkActive="active" ariaCurrentWhenActive="page">{{s3Object.name}}</a>
+                  </p>
+                </div>
+                <ng-template #fileNameIf>
+                  <p>{{s3Object.name}}</p>
+                </ng-template>
               </div>
+
             </td>
             <td>{{s3Object.size}}</td>
             <td>

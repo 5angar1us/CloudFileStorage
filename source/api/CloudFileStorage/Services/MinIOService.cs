@@ -1,4 +1,5 @@
-﻿using CloudFileStorage.DTOs;
+﻿using CloudFileStorage.Api.Extensions;
+using CloudFileStorage.DTOs;
 using Minio;
 using Minio.DataModel;
 using Minio.Exceptions;
@@ -121,13 +122,7 @@ namespace CloudFileStorage.Services
 
                 return await items.Select(x =>
                 {
-                    return new FileInfoDto()
-                    {
-                        Size = x.Size,
-                        DateTime = x.LastModifiedDateTime,
-                        Path = x.Key,
-                        IsDir = x.IsDir
-                    };
+                    return x.ConvertToDto();
 
                 }).ToList();
             }
@@ -164,13 +159,7 @@ namespace CloudFileStorage.Services
 
                 return await items.Select(x =>
                 {
-                    return new FileInfoDto()
-                    {
-                        Size = x.Size,
-                        DateTime = x.LastModifiedDateTime,
-                        Path = x.Key,
-                        IsDir = x.IsDir
-                    };
+                    return x.ConvertToDto();
 
                 }).ToList();
             }
@@ -193,12 +182,7 @@ namespace CloudFileStorage.Services
 
                 return await items.Select(x =>
                 {
-                    return new FileInfoDto()
-                    {
-                        Size = x.Size,
-                        DateTime = x?.LastModifiedDateTime,
-                        Path = x.Key
-                    };
+                    return x.ConvertToDto();
 
                 }).ToList();
             }

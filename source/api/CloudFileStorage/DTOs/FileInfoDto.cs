@@ -8,5 +8,7 @@
 
         public required string Path { get;  set; }
         public bool IsDir { get; set; }
+
+        public string Name { get; set; }    
     }
 }
