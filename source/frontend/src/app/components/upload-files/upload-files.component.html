@@ -1,0 +1,7 @@
+<h1>Upload files</h1>
+<form (ngSubmit)="uploadFiles()" #fileForm="ngForm">
+    <div class="input-group">
+        <input type="file" name="files" class="form-control" multiple (change)="onFileChange($event)" />
+        <button class="btn btn-outline-secondary" type="submit">Загрузить</button>
+    </div>
+</form>

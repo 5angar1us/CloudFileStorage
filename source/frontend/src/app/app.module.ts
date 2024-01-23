@@ -24,6 +24,7 @@ import { RenameModalComponent } from './components/rename-modal/rename-modal.com
 import { MoveModalComponent } from './components/move-modal/move-modal.component';
 import { DeleteModalComponentComponent } from './components/delete-modal-component/delete-modal-component.component';
 import { FileSearchTableComponent } from './components/file-search-table/file-search-table.component';
+import { UploadFilesComponent } from './components/upload-files/upload-files.component';
 
 const bootstrapIcons = {
   shield,
@@ -44,7 +45,8 @@ const bootstrapIcons = {
     RenameModalComponent,
     MoveModalComponent,
     DeleteModalComponentComponent,
-    FileSearchTableComponent
+    FileSearchTableComponent,
+    UploadFilesComponent
   ],
   imports: [
     BrowserModule,

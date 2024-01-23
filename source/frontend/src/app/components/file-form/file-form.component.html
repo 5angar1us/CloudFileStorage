@@ -1,10 +1,6 @@
 <h1>Angular 15 FormData (multipart/data-form) Example</h1>
+<a class="btn btn-secondary m-2 row" routerLink="/upload/files" routerLinkActive="active" ariaCurrentWhenActive="page">Upload files</a>
 
-<form (ngSubmit)="uploadFiles()" #fileForm="ngForm">
-    <div class="input-group">
-        <input type="file" name="files" class="form-control" multiple (change)="onFileChange($event)" />
-        <button class="btn btn-outline-secondary" type="submit">Загрузить</button>
-    </div>
-</form>
+
 
 
