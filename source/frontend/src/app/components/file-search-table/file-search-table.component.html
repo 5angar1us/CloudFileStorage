@@ -1,0 +1,42 @@
+<div *ngIf="s3Objects.length != 0" class="container" >
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Size (bytes)</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let s3Object of s3Objects; let indexOfElement=index">
+          <tr>
+            <td> 
+              <div class="row">
+                <div *ngIf="s3Object.isDir; else objectIconIf">
+                  <fa-icon [icon]="faFolder"></fa-icon>
+                </div>
+                <ng-template #objectIconIf>
+                  <fa-icon [icon]="faFile"></fa-icon>
+                </ng-template>
+                
+                <a [routerLink]="['/file-navigation']" [queryParams]="{path: s3Object.path}" routerLinkActive="active" ariaCurrentWhenActive="page">{{s3Object.name}}</a>
+              </div>
+
+            </td>
+            <td>{{s3Object.size}}</td>
+            <td>
+              <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                  ...
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button (click)="donloadFile(s3Object.path, s3Object.path)" ngbDropdownItem>Download</button>
+                  <button (click)="renameFile(s3Object.path)" ngbDropdownItem>Rename</button>
+                  <button (click)="moveFile(s3Object.path)" ngbDropdownItem>Move</button>
+                  <button (click)="deleteFile(s3Object.path)"ngbDropdownItem>Delete</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</div>
