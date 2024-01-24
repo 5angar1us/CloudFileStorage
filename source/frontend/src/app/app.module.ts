@@ -13,7 +13,6 @@ import {AppComponent} from './app.component';
 import {RequestComponent} from './components/request/request.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DemoComponent } from './components/demo/demo.component';
-import { FileFormComponent } from './components/file-form/file-form.component';
 import { AlertModule } from './components/_alert';
 import { FileNavigationComponent } from './components/file-navigation/file-navigation.component';
 import { SearchComponent } from './components/search/search.component';
@@ -25,6 +24,8 @@ import { MoveModalComponent } from './components/move-modal/move-modal.component
 import { DeleteModalComponentComponent } from './components/delete-modal-component/delete-modal-component.component';
 import { FileSearchTableComponent } from './components/file-search-table/file-search-table.component';
 import { UploadFilesComponent } from './components/upload-files/upload-files.component';
+import { UploadFolderComponent } from './components/upload-folder/upload-folder.component';
+import { BaseUploadComponent } from './components/base-upload/base-upload.component';
 
 const bootstrapIcons = {
   shield,
@@ -37,7 +38,6 @@ const bootstrapIcons = {
     AppComponent,
     RequestComponent,
     DemoComponent,
-    FileFormComponent,
     FileNavigationComponent,
     SearchComponent,
     FileTableComponent,
@@ -46,7 +46,9 @@ const bootstrapIcons = {
     MoveModalComponent,
     DeleteModalComponentComponent,
     FileSearchTableComponent,
-    UploadFilesComponent
+    UploadFilesComponent,
+    UploadFolderComponent,
+    BaseUploadComponent
   ],
   imports: [
     BrowserModule,

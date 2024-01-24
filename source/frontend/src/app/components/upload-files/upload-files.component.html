@@ -1,7 +1,27 @@
 <h1>Upload files</h1>
 <form (ngSubmit)="uploadFiles()" #fileForm="ngForm">
     <div class="input-group">
-        <input type="file" name="files" class="form-control" multiple (change)="onFileChange($event)" />
+        <input type="file" name="files" class="form-control"  #fileInput (change)="onFileChange(fileInput.files)" multiple />
         <button class="btn btn-outline-secondary" type="submit">Загрузить</button>
     </div>
 </form>
+
+<table style="width: 100%" *ngIf="files?.length; else noFiles">
+    <thead>
+      <tr>
+        <th>File name</th>
+        <th>Size (bytes)</th>
+        <th></th>
+      </tr>
+    </thead>
+  
+    <tbody>
+      <tr *ngFor="let file of files">
+        <th>{{ file?.path }}</th>
+        <th>{{file?.sizebytes}}</th>
+        <th><button (click)="deleteFile(file.path)"ngbDropdownItem>Delete</button></th>
+      </tr>
+    </tbody>
+  </table>
+  
+  <ng-template #noFiles> <p>No files</p> </ng-template>
