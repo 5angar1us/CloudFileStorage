@@ -12,8 +12,13 @@ export class StringBuilder
         return this.strArray.length === 0;
     }
     append(str: string): void {
-        if (!str) {
+        if (str != null && str !=undefined) {
             this.strArray.push(str);
+        }
+    }
+    appendLine(str: string): void {
+        if (str != null && str !=undefined) {
+            this.strArray.push(str + "<br/>");
         }
     }
     toString(): string {
