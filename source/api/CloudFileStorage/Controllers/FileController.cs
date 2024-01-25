@@ -69,9 +69,13 @@ namespace CloudFileStorage.Controllers
 
             const int maxSizeInMB = 5;
             const long maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+            const long minSizeIBytes = 0;
 
             if (multipartParser.Files.Any(x => x.Data.Length > maxSizeInBytes)) 
                 return Results.BadRequest($"At least one of the files is larger than the allowed size of {maxSizeInMB} MB");
+
+            if (multipartParser.Files.Any(x => x.Data.Length <= minSizeIBytes))
+                return Results.BadRequest($"At least one of the files is smaller than the allowed size of {minSizeIBytes} bytes");
 
             foreach (FilePart fileInfo in multipartParser.Files)
             {

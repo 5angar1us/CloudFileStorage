@@ -10,9 +10,10 @@ import { AlertService } from '../_alert';
   styleUrls: ['./base-upload.component.scss']
 })
 export class BaseUploadComponent {
-  files: FileItem[];
-  maxSizeInMB = 5;
-  maxSizeInBytes = this.maxSizeInMB * 1024 * 1024;
+  public files: FileItem[];
+  private maxSizeInMB = 5;
+  private maxSizeInKiloBytes = this.maxSizeInMB * 1024;
+  private minSizeInBytes = 0;
 
   constructor(private uploadFileService: UploadFileService, private alertService: AlertService) {
     this.files = []
@@ -45,15 +46,35 @@ export class BaseUploadComponent {
   }
 
   public TryValidate(files: FileItem[]): boolean{
-    const isAllValid  = files.every(file => this.validateNumber(file));
+    let validatedFileItem = files.map(file => {
+      
+      let validatedFileItem : ValidatedFileItem ={
+        fileItem : file,
+        isValid : true
+      }
+      return validatedFileItem;
+    });
+
+    validatedFileItem = validatedFileItem.map(file=>{
+
+      file.isValid = this.validateForLargeSize(file) 
+      && this.validateForSmallerSize(file);
+      
+      return file;
+    });
+
+    let isAllValid = validatedFileItem.every(file => file.isValid)
     if(isAllValid) return true;
 
     const stringBulder = new StringBuilder();
-    stringBulder.append(`File(s) larger than allowed size = ${this.maxSizeInBytes} bytes (${this.maxSizeInMB} mb):`);
+    stringBulder.appendLine(`The file size must not exceed the limit of ${this.maxSizeInKiloBytes} KiloBytes (${this.maxSizeInMB} mb)`);
+    stringBulder.appendLine(`The file size must be greater than ${this.minSizeInBytes} Bytes`);
+    stringBulder.appendLine("");
+    stringBulder.appendLine(`Problem with file(s):`);
 
-    const invalidFiles = files.filter(file => this.validateNumber(file) == false);
+    const invalidFiles = validatedFileItem.filter(file =>file.isValid == false);
     for (let file of invalidFiles) {
-      stringBulder.append(`- ${file.name} with size(bytes) ${file.sizebytes}`)
+      stringBulder.appendLine(`- ${file.fileItem.name}`)
     }
 
     this.alertService.error(stringBulder.toString());
@@ -66,16 +87,26 @@ export class BaseUploadComponent {
 
   private extractFullFilePath(file: File) {
     const webkitRelativePath: string = this.extractWebkitRelativePath(file);
-    const currentpath = webkitRelativePath.split(" ").join("/");
 
-    return currentpath;
+    return webkitRelativePath;
   }
 
-  extractWebkitRelativePath(file: File) {
+  private extractWebkitRelativePath(file: File) {
     return file['webkitRelativePath']
   }
 
-  validateNumber(file: FileItem){
-    return parseInt((file.sizebytes / 1024).toFixed(4)) > this.maxSizeInBytes || false;
+  private validateForLargeSize(file: ValidatedFileItem){
+    let sizeInKiloBytes = parseInt((file.fileItem.sizebytes / 1024).toFixed(4));
+    return sizeInKiloBytes <= this.maxSizeInKiloBytes;
   }
+
+  private validateForSmallerSize(file: ValidatedFileItem){
+    return file.fileItem.sizebytes > this.minSizeInBytes;
+  }
+
+}
+
+export interface ValidatedFileItem {
+  fileItem: FileItem
+  isValid: boolean
 }
