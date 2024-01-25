@@ -45,7 +45,7 @@ export class BaseUploadComponent {
   }
 
   public TryValidate(files: FileItem[]): boolean{
-    const isAllValid  = files.every(this.validateNumber);
+    const isAllValid  = files.every(file => this.validateNumber(file));
     if(isAllValid) return true;
 
     const stringBulder = new StringBuilder();
